@@ -32,8 +32,8 @@ class TrainConfig():
     gradient_checkpointing: bool = is_cuda
 
     save_strategy: str = "steps"
-    save_steps: int = 10
-    save_total_limit: int = 3
+    save_steps: int = 300
+    save_total_limit: int = 10
 
     # ==========================================
     # Hyper Parameter Setting
@@ -41,18 +41,18 @@ class TrainConfig():
     learning_rate: float = 5e-6
     beta: float = 0.00
     max_grad_norm: float = 1.0
-    per_device_train_batch_size: int = 1
+    per_device_train_batch_size: int = 2
     gradient_accumulation_steps: int = 4
-    num_generations: int = 4
-    generation_batch_size: int = 2
-    max_completion_length: int = 1024
+    num_generations: int = 8
+    generation_batch_size: int = 16
+    max_completion_length: int = 2048
     num_train_epochs: int = 1
 
     # ==========================================
     # Logging Setting
     # ==========================================
-    report_to: str = 'none'
-    logging_steps: int = 1
+    report_to: str = 'wandb'
+    logging_steps: int = 10
     log_completions: bool = True
 
 def grpo_train(config: TrainConfig):
