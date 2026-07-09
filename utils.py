@@ -25,6 +25,21 @@ def parse_answer(target: str):
     
     return None
 
+def parse_tag(target: str):
+    reasoning_pattern = r"<reasoning>(.*?)</reasoning>"
+    answer_pattern = r"<answer>(.*?)</answer>"
+
+    reasoning_match = re.search(reasoning_pattern, target, re.DOTALL)
+    answer_match = re.search(answer_pattern, target, re.DOTALL)
+
+    reasoning, answer = None, None
+    if reasoning_match:
+        reasoning = reasoning_match.group(1).strip()
+    if answer_match:
+        answer = answer_match.group(1).strip()
+
+    return reasoning, answer
+
 def get_config(config_class: dataclass):
     parser = HfArgumentParser((config_class,))
     config, *_ = parser.parse_args_into_dataclasses()
