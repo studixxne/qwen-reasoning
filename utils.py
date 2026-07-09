@@ -1,6 +1,29 @@
+import torch
+import re
 import functools
 from dataclasses import dataclass
 from transformers import HfArgumentParser
+
+def get_device():
+    if torch.cuda.is_available():
+        return 'cuda'
+    elif torch.backends.mps.is_available():
+        return 'mps'
+    else:
+        return 'cpu'
+    
+def parse_format(target: str):
+    pattern = re.compile(r"^<reasoning>.*?</reasoning>\s*<answer>.*?</answer>$", re.DOTALL)
+    return pattern.match(target)
+
+def parse_answer(target: str):
+    pattern = re.compile(r"####\s*(\d+)")
+    target_match = pattern.findall(target)
+
+    if target_match:
+        return int(target_match[-1])
+    
+    return None
 
 def get_config(config_class: dataclass):
     parser = HfArgumentParser((config_class,))
