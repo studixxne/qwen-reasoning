@@ -8,7 +8,7 @@ from utils import get_prompt, get_device, get_config
 @dataclass
 class GenConfig:
     base_model: str = "Qwen/Qwen2.5-1.5B-Instruct"
-    peft_path: str = "models/checkpoint-1800"
+    peft_path: str = None
     device = get_device()
 
 def load_model(config: GenConfig):
@@ -40,7 +40,7 @@ def main(config: GenConfig):
         generated_ids = [output_ids[len(input_ids):] for input_ids, output_ids in zip(model_inputs.input_ids, generated_ids)]
 
         response = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]
-        print(f"\n🍃 Assistant: {response}\n")
+        print(f"\n🔖 Assistant: {response}\n")
 
 if __name__ == "__main__":
     config = get_config(GenConfig)
