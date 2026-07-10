@@ -101,7 +101,7 @@ def grpo_train(config: TrainConfig):
         peft_config=peft_config,
         args=training_args,
         train_dataset=dataset,
-        reward_funcs=[rewards.format_reward, rewards.answer_reward, rewards.logging_reward],
+        reward_funcs=[rewards.format_reward, rewards.answer_reward, rewards.answer_length_penalty],
         processing_class=tokenizer
     )
 
